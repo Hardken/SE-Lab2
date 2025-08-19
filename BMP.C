@@ -1,5 +1,4 @@
 /* bmp_tool.c : Lee un BMP 24bpp, hace escala de grises o convolución 3x3 y guarda otro BMP.
-   Autor: tú :)
    Compilar: gcc -std=c11 -Wall -Wextra -O2 bmp_tool.c -o bmp_tool
    Ejecutar: ./bmp_tool
 */
