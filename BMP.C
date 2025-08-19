@@ -9,7 +9,6 @@
 #include <string.h> // memset
 
 // --- Estructuras de cabecera BMP ---
-// Empaquetadas sin relleno del compilador:
 #pragma pack(push, 1)
 typedef struct
 {
@@ -54,7 +53,6 @@ static inline uint8_t clamp_int_to_u8(int v)
 
 // Carga BMP 24bpp sin compresión, altura > 0.
 // Devuelve un bloque de Pixel24 de tamaño width*height (ordenado de arriba a abajo, izquierda a derecha).
-// También devuelve headers por si quieres reusarlos.
 int load_bmp24(const char *filename,
                BMPHeader *out_fh, BMPInfoHeader *out_ih,
                Pixel24 **out_pixels)
@@ -90,7 +88,7 @@ int load_bmp24(const char *filename,
     {
         fprintf(stderr, "Solo se soporta BMP 24-bpp sin compresion.\n");
         fclose(f);
-        return 0;
+        return 0; // También devuelve headers por si quieres reusarlos.
     }
     if (ih.biWidth <= 0 || ih.biHeight <= 0)
     {
@@ -109,7 +107,7 @@ int load_bmp24(const char *filename,
     int row_bytes = width * 3;
     int padding = (4 - (row_bytes % 4)) % 4;
 
-    // Reservamos memoria para la imagen ordenada de ARRIBA hacia ABAJO (forma natural de trabajar)
+    // Reserva memoria para la imagen ordenada de ARRIBA hacia ABAJO (forma natural de trabajar)
     Pixel24 *pixels = (Pixel24 *)malloc(sizeof(Pixel24) * (size_t)width * (size_t)height);
     if (!pixels)
     {
